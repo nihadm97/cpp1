@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>C++ – Uvod u C++</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"><style>
+#exerciseDescription math { font-size: 1.25em; math-style: normal; margin-inline: .12em; white-space: nowrap; }
+#exerciseDescription { line-height: 1.85; }
+</style></head>
+<body><div class="container mt-3">
+<div class="mb-3"><label for="exerciseSelector" class="form-label">Odaberi zadatak:</label>
+<select id="exerciseSelector" class="form-select" onchange="loadExercise()">
+      <option value="1">🟢 Zadatak 1: Ispiši &quot;Hello, World!&quot;</option>
+      <option value="2">🟢 Zadatak 2: Kulturne znamenitosti</option>
+      <option value="3">🟢 Zadatak 3: Organi</option>
+      <option value="4">🟢 Zadatak 4: Datum Dana državnosti</option>
+      <option value="5">🟢 Zadatak 5: Hemijska formula više puta</option>
+      <option value="6">🟠 Zadatak 6: Atomi u hemijskoj formuli</option>
+      <option value="7">🟠 Zadatak 7: Pravougaonik</option>
+      <option value="8">🟠 Zadatak 8: Nacrtaj trougao</option>
+      <option value="9">🟠 Zadatak 9: Uspon do tvrđave</option>
+      <option value="10">🟠 Zadatak 10: Cijena dva proizvoda</option>
+      <option value="11">🟠 Zadatak 11: Linearni izraz</option>
+</select></div>
+<div id="exerciseDescription" class="alert alert-info"></div>
+<iframe title="C++ online kompajler" src="https://onecompiler.com/cpp" width="100%" height="600px"></iframe>
+<div class="d-flex justify-content-between mt-3"><button class="btn btn-success" onclick="runExample()">Primjeri ispisa</button></div>
+<div id="output" class="mt-3 alert alert-secondary" style="white-space: pre-wrap; overflow-wrap: anywhere;" aria-live="polite">Output će biti prikazan u ovom polju...</div>
+</div><script>
+const exercises = {
+  "1": {
+    "title": "Ispiši \"Hello, World!\"",
+    "description": "Napiši program koji kao output ispisuje \"Hello, World!\".",
+    "sampleInput": [],
+    "expectedOutput": [
+      "Hello, World!"
+    ],
+    "level": 0,
+    "descriptionHtml": "Napiši program koji kao output ispisuje &quot;Hello, World!&quot;."
+  },
+  "2": {
+    "title": "Kulturne znamenitosti",
+    "description": "Napisati program koji u jednom redu, odvojene razmakom, ispisuje nazive kulturnih znamenitosti Bosne i Hercegovine: Stari most, Vijećnica, Sahat-kula, Svrzina kuća i Blagajska tekija. Nazive ispisati bez zareza.",
+    "sampleInput": [],
+    "expectedOutput": [
+      "Stari most Vijećnica Sahat-kula Svrzina kuća Blagajska tekija"
+    ],
+    "level": 0,
+    "descriptionHtml": "Napisati program koji u jednom redu, odvojene razmakom, ispisuje nazive kulturnih znamenitosti Bosne i Hercegovine: Stari most, Vijećnica, Sahat-kula, Svrzina kuća i Blagajska tekija. Nazive ispisati bez zareza."
+  },
+  "3": {
+    "title": "Organi",
+    "description": "Ispisati nazive organa, svaki u novom redu: Srce, Pluća, Jetra, Bubreg, Mozak.",
+    "sampleInput": [],
+    "expectedOutput": [
+      "Srce\nPluća\nJetra\nBubreg\nMozak"
+    ],
+    "level": 0,
+    "descriptionHtml": "Ispisati nazive organa, svaki u novom redu: Srce, Pluća, Jetra, Bubreg, Mozak."
+  },
+  "4": {
+    "title": "Datum Dana državnosti",
+    "description": "Napisati program koji ispisuje datum prvog zasjedanja ZAVNOBiH-a u formatu 25.11.1943. Dan, mjesec i godinu ispisati redom, odvojene tačkama, bez razmaka.",
+    "sampleInput": [],
+    "expectedOutput": [
+      "25.11.1943"
+    ],
+    "level": 0,
+    "descriptionHtml": "Napisati program koji ispisuje datum prvog zasjedanja ZAVNOBiH-a u formatu 25.11.1943. Dan, mjesec i godinu ispisati redom, odvojene tačkama, bez razmaka."
+  },
+  "5": {
+    "title": "Hemijska formula više puta",
+    "description": "Napisati program koji hemijsku formulu ugljendioksida CO2 ispisuje pet puta, svaki put u novom redu. Broj 2 u konzoli ispisati kao običnu cifru, kao u primjeru ispisa.",
+    "sampleInput": [],
+    "expectedOutput": [
+      "CO2\nCO2\nCO2\nCO2\nCO2"
+    ],
+    "level": 0,
+    "descriptionHtml": "Napisati program koji hemijsku formulu ugljendioksida <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"CO2\"><mrow><mi mathvariant=\"normal\">C</mi><msub><mi mathvariant=\"normal\">O</mi><mn>2</mn></msub></mrow></math> ispisuje pet puta, svaki put u novom redu. Broj 2 u konzoli ispisati kao običnu cifru, kao u primjeru ispisa."
+  },
+  "6": {
+    "title": "Atomi u hemijskoj formuli",
+    "description": "Data je hemijska formula sumporne kiseline H2SO4. Ispisati simbole atoma redom, onoliko puta koliko ih ima prema formuli: prvo vodik, zatim sumpor, pa kisik. Svaki simbol ispisati posebno, u istom redu, bez razmaka.",
+    "sampleInput": [],
+    "expectedOutput": [
+      "HHSOOOO"
+    ],
+    "level": 1,
+    "descriptionHtml": "Data je hemijska formula sumporne kiseline <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"H2SO4\"><mrow><msub><mi mathvariant=\"normal\">H</mi><mn>2</mn></msub><mi mathvariant=\"normal\">S</mi><msub><mi mathvariant=\"normal\">O</mi><mn>4</mn></msub></mrow></math>. Ispisati simbole atoma redom, onoliko puta koliko ih ima prema formuli: prvo vodik, zatim sumpor, pa kisik. Svaki simbol ispisati posebno, u istom redu, bez razmaka."
+  },
+  "7": {
+    "title": "Pravougaonik",
+    "description": "Iscrtati pravougaonik od zvjezdica: 5 redova i 10 zvjezdica u svakom redu.",
+    "sampleInput": [],
+    "expectedOutput": [
+      "**********\n**********\n**********\n**********\n**********"
+    ],
+    "level": 1,
+    "descriptionHtml": "Iscrtati pravougaonik od zvjezdica: 5 redova i 10 zvjezdica u svakom redu."
+  },
+  "8": {
+    "title": "Nacrtaj trougao",
+    "description": "Napiši program koji iscrtava pravougli trougao pomoću znaka * dimenzije čije su katete duge po 5 zvjezdica tako da pravi ugao bude u donjem lijevom čosku.",
+    "sampleInput": [],
+    "expectedOutput": [
+      "*\n**\n***\n****\n*****"
+    ],
+    "level": 1,
+    "descriptionHtml": "Napiši program koji iscrtava pravougli trougao pomoću znaka * dimenzije čije su katete duge po 5 zvjezdica tako da pravi ugao bude u donjem lijevom čosku."
+  },
+  "9": {
+    "title": "Uspon do tvrđave",
+    "description": "Tokom obilaska stare tvrđave u Jajcu posjetilac se uspinje za 5 metara. Unosi se trenutna nadmorska visina u cijelim metrima. Ispisati nadmorsku visinu nakon uspona.",
+    "sampleInput": [
+      "350",
+      "400",
+      "420",
+      "475",
+      "500"
+    ],
+    "expectedOutput": [
+      "355",
+      "405",
+      "425",
+      "480",
+      "505"
+    ],
+    "level": 1,
+    "descriptionHtml": "Tokom obilaska stare tvrđave u Jajcu posjetilac se uspinje za 5 metara. Unosi se trenutna nadmorska visina u cijelim metrima. Ispisati nadmorsku visinu nakon uspona."
+  },
+  "10": {
+    "title": "Cijena dva proizvoda",
+    "description": "Unosi se cijena jednog proizvoda u cijelim KM. Ispisati cijenu dva takva proizvoda.",
+    "sampleInput": [
+      "0",
+      "5",
+      "4",
+      "100",
+      "12"
+    ],
+    "expectedOutput": [
+      "0",
+      "10",
+      "8",
+      "200",
+      "24"
+    ],
+    "level": 1,
+    "descriptionHtml": "Unosi se cijena jednog proizvoda u cijelim KM. Ispisati cijenu dva takva proizvoda."
+  },
+  "11": {
+    "title": "Linearni izraz",
+    "description": "Za uneseni cijeli broj x izračunati 3x + 2.",
+    "sampleInput": [
+      "10",
+      "0",
+      "5",
+      "-4",
+      "-100"
+    ],
+    "expectedOutput": [
+      "32",
+      "2",
+      "17",
+      "-10",
+      "-298"
+    ],
+    "level": 1,
+    "descriptionHtml": "Za uneseni cijeli broj <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"x\"><mrow><mi>x</mi></mrow></math> izračunati <math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"inline\" aria-label=\"3x + 2\"><mrow><mn>3</mn><mi>x</mi><mo>+</mo><mn>2</mn></mrow></math>."
+  }
+};
+function loadExercise() { const e=exercises[document.getElementById('exerciseSelector').value]; document.getElementById('exerciseDescription').innerHTML=e.descriptionHtml; document.getElementById('output').textContent='Output će biti prikazan u ovom polju...'; }
+function runExample() { const e=exercises[document.getElementById('exerciseSelector').value]; const blocks=e.expectedOutput.map((v,i)=> (e.sampleInput.length ? 'Ulaz: '+e.sampleInput[i]+'\n' : 'Bez unosa\n')+'Izlaz:\n'+v); document.getElementById('output').textContent=(e.random?'Mogući ispis (rezultat se može razlikovati):\n\n':'')+blocks.join('\n\n'); }
+loadExercise();
+</script></body></html>
